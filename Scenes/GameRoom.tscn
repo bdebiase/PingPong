@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/Game.cs" type="Script" id=1]
+[ext_resource path="res://Prefabs/Ball.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/Paddle.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/UI.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 35, 370 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 512, 35 )
+
+[node name="GameRoom" type="Node2D"]
+script = ExtResource( 1 )
+gameTimer = 3.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="Ball" parent="." instance=ExtResource( 2 )]
+
+[node name="Player1" parent="." instance=ExtResource( 3 )]
+position = Vector2( -475, 0 )
+
+[node name="Player2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 475, 0 )
+player = 1
+
+[node name="LeftOOB" type="StaticBody2D" parent="." groups=[
+"outofbounds",
+]]
+position = Vector2( -547, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftOOB"]
+shape = SubResource( 1 )
+
+[node name="RightOOB" type="StaticBody2D" parent="." groups=[
+"outofbounds",
+]]
+position = Vector2( 547, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightOOB"]
+shape = SubResource( 1 )
+
+[node name="TopOOB" type="StaticBody2D" parent="."]
+position = Vector2( 0, -335 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopOOB"]
+shape = SubResource( 2 )
+
+[node name="BottomOOB" type="StaticBody2D" parent="."]
+position = Vector2( 0, 335 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomOOB"]
+shape = SubResource( 2 )
+
+[node name="UI" parent="." instance=ExtResource( 4 )]
+margin_left = -512.0
+margin_top = -298.772
+margin_right = 512.0
+margin_bottom = 301.228
